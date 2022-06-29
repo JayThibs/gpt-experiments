@@ -248,6 +248,6 @@ if __name__ == "__main__":
     if args.output_dir:
         os.makedirs(args.output_dir, exist_ok=True)
     files = get_files(input_folder)
-    print(f"Creating TFRecords from files: {files}")
+    print(f"Creating CSV from files: {files}")
 
     results = create_csv(files, args)
