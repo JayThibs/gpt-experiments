@@ -70,6 +70,7 @@ def parse_args():
 
     return args
 
+
 def create_txts(folder, jsonl_filepath):
     os.makedirs(folder, exist_ok=True)
     i = 0
@@ -85,10 +86,8 @@ def create_txts(folder, jsonl_filepath):
                 pass
 
 
-def get_files(input_path: Path, jsonl_filepath: Path) -> List[str]:
+def get_files(input_path: Path) -> List[str]:
     supported_file_types = ["jsonl.zst", ".txt", ".xz", ".tar.gz"]
-    if not os.path.exists(input_path):
-        create_csv(input_path, jsonl_filepath)
     if input_path.is_dir():
         # get all files with supported file types
         files = [list(Path(input_path).glob(f"*{ft}")) for ft in supported_file_types]
@@ -104,6 +103,7 @@ def get_files(input_path: Path, jsonl_filepath: Path) -> List[str]:
         raise FileNotFoundError(f"No such file or directory: {input_path=}")
 
     return [str(f) for f in files]
+
 
 def split_list(l, n):
     # splits list/string into n size chunks
@@ -240,9 +240,14 @@ def create_csv(jsonl, args):
 if __name__ == "__main__":
     args = parse_args()
 
+    input_folder = args.input_path + "_txt_folder"
+
+    if not os.path.exists(input_folder) and args.input_path.endswith(".jsonl"):
+        create_csv(input_folder, args.input_path)
+
     if args.output_dir:
         os.makedirs(args.output_dir, exist_ok=True)
-    files = get_files(args.input_path)
+    files = get_files(input_folder)
     print(f"Creating TFRecords from files: {files}")
 
     results = create_csv(files, args)
