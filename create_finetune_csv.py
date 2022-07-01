@@ -100,7 +100,7 @@ def get_files(input_path: Path) -> List[str]:
         ), f"Input file type must be one of: {supported_file_types}"
         files = [input_path]
     else:
-        raise FileNotFoundError(f"No such file or directory: {input_path=}")
+        raise FileNotFoundError(f"No such file or directory: {input_path}")
 
     return [str(f) for f in files]
 
