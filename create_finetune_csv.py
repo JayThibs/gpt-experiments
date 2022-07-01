@@ -240,10 +240,10 @@ def create_csv(jsonl, args):
 if __name__ == "__main__":
     args = parse_args()
 
-    input_folder = args.input_path + "_txt_folder"
+    input_folder = str(args.input_path) + "_txt_folder"
 
-    if not os.path.exists(input_folder) and args.input_path.endswith(".jsonl"):
-        create_csv(input_folder, args.input_path)
+    if not os.path.exists(input_folder) and str(args.input_path).endswith(".jsonl"):
+        create_txts(input_folder, args.input_path)
 
     if args.output_dir:
         os.makedirs(args.output_dir, exist_ok=True)
